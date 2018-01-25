@@ -16,6 +16,12 @@ class Usaha extends Model
      */
     protected $dates = ['deleted_at'];
     protected $table = 'usaha';
+    public $incrementing = false;
+    protected $fillable = 
+    [
+        'id','id_pengusaha', 'nama', 'alamat', 'jenis', 'keterangan' , 'modal', 'isFinal' , 'verified' , 'closed'
+    ];
+
     public function pengusaha()
     {
         return $this->belongsTo('App\Pengusaha', 'id_pengusaha');
@@ -44,4 +50,5 @@ class Usaha extends Model
     {
         return $this->belongsTo('App\Jenis_usaha', 'jenis');
     }
+
 }

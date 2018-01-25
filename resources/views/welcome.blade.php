@@ -49,27 +49,15 @@
           </div>
         </div>
         <div class="row">
+          @foreach($jenis_usaha as $j)
           <div class="col-lg-4 col-md-4 col-sm-12 probootstrap-animate mb-3">
-            <a href="{{ route('jenisUsaha') }}" class="probootstrap-thumbnail">
-              <img src="/img/perikanan.png" alt="Free Template by ProBootstrap.com" class="img-fluid">
-              <h3>Perikanan</h3>
-              <center><h4>Semua usaha yang berhubungan dengan perikanan bisa di ajukan modal usaha dengan mudah disini.</h4></center>
+            <a href="{{ route('jenisUsaha', ['nama' => $j->nama]) }}" class="probootstrap-thumbnail">
+              <img src="{{$j->url_foto}}" alt="Free Template by ProBootstrap.com" class="img-fluid">
+              <h3>{{$j->nama}}</h3>
+              <center><h4>{{$j->keterangan}}</h4></center>
             </a>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-12 probootstrap-animate mb-3">
-            <a href="{{ route('jenisUsaha') }}" class="probootstrap-thumbnail">
-              <img src="/img/peternakan.png" alt="Free Template by ProBootstrap.com" class="img-fluid">
-              <h3>Peternakan</h3>
-              <center><h4>Semua usaha yang berhubungan dengan peternakan bisa di ajukan modal usaha dengan mudah disini.</h4></center>
-            </a>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-12 probootstrap-animate mb-3">
-            <a href="{{ route('jenisUsaha') }}" class="probootstrap-thumbnail">
-              <img src="/img/pertanian.png" alt="Free Template by ProBootstrap.com" class="img-fluid">
-              <h3>Pertanian</h3>
-              <center><h4>Semua usaha yang berhubungan dengan pertanian bisa di ajukan modal usaha dengan mudah disini.</h4></center>
-            </a>
-          </div>
+          @endforeach
         </div>
       </div>
     </section>

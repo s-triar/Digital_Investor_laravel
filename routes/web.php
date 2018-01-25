@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'MainController@index');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('authlogin');
 Route::post('/login', 'Auth\LoginController@login')->name('authloginpost');
 Route::post('/logout', 'Auth\LoginController@logout')->name('authlogout');
@@ -27,7 +25,7 @@ Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetFor
 Route::get('/about-us', 'MainController@showAboutUs')->name('aboutus');
 Route::get('/pencarian-usaha', 'MainController@showPencarianUsaha')->name('pencarianusaha');
 Route::get('/SyaratdanKetentuan', 'MainController@showSyaratdanKetentuan')->name('SyaratdanKetentuan');
-Route::get('/Jenis-Usaha', 'MainController@showjenisUsaha')->name('jenisUsaha');
+Route::get('/Jenis-Usaha/{nama}', 'MainController@showjenisUsaha')->name('jenisUsaha');
 
 Route::group(['prefix' => 'admin'], function () {
   Route::get('/login-admin', 'AdminAuth\LoginController@showLoginForm')->name('auth_adminlogin');

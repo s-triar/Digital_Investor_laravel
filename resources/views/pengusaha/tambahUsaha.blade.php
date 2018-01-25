@@ -1,5 +1,15 @@
 @extends('pengusaha.layout.pengusahaApp')
-
+<script>
+        var loadFileFoto= function(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+            var output = document.getElementById('outputPreview');
+            output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            user.foto = event.target.files[0];
+        };
+    </script>
 @section('content')
 {{--  Untuk menampilkan dan edit profil  --}}
 <section class="probootstrap_section bg-light">
@@ -13,27 +23,22 @@
           <div class="col-lg-2 col-md-2"></div>
     <div class="col-lg-8 col-md-8">
         <div class="col-md probootstrap-animate fadeInUp probootstrap-animated ">
-         <form class="probootstrap-form" method="post" action="{{route('authregisterpost')}}">
-          <div class="form-group">
+         <form class="probootstrap-form" method="post" action="{{route('pengusaha.tambahUsahaPost')}}" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="form-group">
             <label class="col-sm-2" for="nama">nama</label>
-            <input name="nama" class="form-control" id="nama" type="text" placeholder="Nama Pengusaha">
+            <input name="nama" class="form-control" id="nama" type="text" placeholder="Nama Usaha">
             @if ($errors->has('nama'))
                 <strong>{{ $errors->first('nama') }}</strong>
             @endif
           </div>
-          <div class="form-group">
-                <label class="col-sm-2" for="email">Email</label>
-                <input name="email" class="form-control" id="email" type="email" placeholder="Example@gmail.com">
-            @if ($errors->has('email'))
-                <strong>{{ $errors->first('email') }}</strong>
-            @endif
-            </div>
             <div class="form-group">
                <label class="col-sm-5" for="jenis">Jenis Usaha</label>
-               <input name="jenis" class="form-control" id="jenis" type="text" placeholder="Jenis Usaha">
-            @if ($errors->has('jenis'))
-                 <strong>{{ $errors->first('jenis') }}</strong>
-            @endif
+               <select name="jenis_usaha" class="form-control">
+                   @foreach($jenis_usaha as $j)
+                   <option value="{{$j->id}}">{{$j->nama}}</option>
+                   @endforeach
+               </select>
             </div> 
             
             <div class="form-group">
@@ -51,7 +56,7 @@
             @endif
             </div>
             <div class="form-group">
-                <label class="col-sm-5" for="modal">Jenis Usaha</label>
+                <label class="col-sm-5" for="modal">Modal</label>
                 <input name="modal" class="form-control" id="modal" type="number" min="0" placeholder="Modal">
             @if ($errors->has('modal'))
                 <strong>{{ $errors->first('modal') }}</strong>
@@ -59,11 +64,22 @@
             </div>
             <div class="form-group">
                     <label class="col-sm-5" for="isFinal">Tandai Jika Sudah Benar</label>
-                    <input name="isFinal" class="form" id="isFinal" type="checkbox">
+                    <input name="isFinal" class="form" id="isFinal" type="checkbox" value="1">
                 @if ($errors->has('isFinal'))
                     <strong>{{ $errors->first('isFinal') }}</strong>
                 @endif
                 </div>
+                
+                <div class="form-group">
+                <label class="" for="foto_usaha">Foto Usaha</label>
+                    <input name="Foto_usaha" class="form-control" id="foto_usaha" type="file" accept="image/*" onchange="loadFileFoto(event)" placeholder="Foto Usaha">
+                        @if ($errors->has('Foto_usaha'))
+                            <strong>{{ $errors->first('Foto_usaha') }}</strong>
+                        @endif
+                        <img id="outputPreview" class="img-fluid" width="100%">
+                </div>
+
+                <br>
                 <div class="form-group">
                         <input name="submit" class="btn btn-danger" id="submit" type="submit" value="Tambah">
                       </div>

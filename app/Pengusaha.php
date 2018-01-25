@@ -16,6 +16,7 @@ class Pengusaha extends Model
      */
     protected $dates = ['deleted_at'];
     protected $table = 'pengusaha';
+    public $incrementing = false;
     protected $fillable = 
     [
         'id','id_auth', 'nik','nama', 'alamat', 'telepon', 'tempat_lahir' , 'tanggal_lahir', 'jenis_kelamin' , 'agama' , 'url_foto_ktp', 'url_foto', 'verified'

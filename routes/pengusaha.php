@@ -14,3 +14,6 @@ Route::get('/daftar-usaha', 'PengusahaController@showDaftarUsaha')->name('daftar
 Route::get('/detail-usaha', 'PengusahaController@showdetailUsaha')->name('detailUsaha');
 Route::get('/Profile', 'PengusahaController@showprofile')->name('profile');
 Route::get('/Tambah-Usaha', 'PengusahaController@showtambahUsaha')->name('tambahUsaha');
+Route::post('/Tambah-Usaha', 'PengusahaController@uploadUsaha')->name('tambahUsahaPost');
+Route::get('/Tambah-Jaminan/{id_usaha}', 'PengusahaController@showFormJaminan')->name('tambahJaminan');
+Route::post('/Tambah-Jaminan', 'PengusahaController@uploadJaminan')->name('tambahJaminanPost');

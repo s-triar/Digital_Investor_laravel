@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Auth as Auth_user;
 use App\Pengusaha;
+use App\Usaha;
+use App\Jenis_usaha;
+use App\Jenis_jaminan;
+use App\Foto_usaha;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,6 +28,11 @@ class PengusahaController extends Controller
     return $users[2];
   }
 
+  private function getPengusaha()
+  {
+    $pengusaha = Pengusaha::where('id_auth', Auth::guard('pengusaha')->user()->id)->first();
+    return $pengusaha;
+  }
   private function checkIfFilled()
   {
     $pengusaha = new Pengusaha();
@@ -68,6 +77,32 @@ class PengusahaController extends Controller
           'verified' => 0
       ]);
   }
+  protected function validatorUsaha(array $data)
+  {
+        return Validator::make($data, [
+          'nama' => 'required|string|max:191',
+          'alamat' => 'required|string|max:191',
+          'keterangan' => 'required|string|max:191',
+          'modal' => 'required|numeric',
+          'isFinal' => 'required',
+          'Foto_usaha' => 'required|mimes:jpeg,jpg,png|min:50|max:3000'
+        ]);
+  }
+  protected function createUsaha(array $request)
+  {
+      return Usaha::create([
+          'id' => $request['id'],
+          'id_pengusaha' => $this->getPengusaha()->id,
+          'nama' => $request['nama'],
+          'jenis' => $request['jenis_usaha'],
+          'alamat' => $request['alamat'],
+          'keterangan' => $request['keterangan'],
+          'modal' => $request['modal'],
+          'isFinal' => $request['isFinal'],
+          'verified' => 1,
+          'closed' => 0,
+      ]);
+  }
   public function showFormIsiProfile(){
     $s = $this->pengaman();
     return view('pengusaha.formProfileFirst');
@@ -75,7 +110,8 @@ class PengusahaController extends Controller
   public function showDaftarUsaha(){
     if($this->checkIfFilled())
     {
-      return view('pengusaha.daftarUsaha');
+      $usaha = Usaha::where('id_pengusaha', $this->getPengusaha()->id);
+      return view('pengusaha.daftarUsaha')->with(compact('usaha'));
     }
     else
     {
@@ -110,7 +146,8 @@ class PengusahaController extends Controller
   public function showtambahUsaha(){
     if($this->checkIfFilled())
     {
-      return view('pengusaha.tambahUsaha');
+      $jenis_usaha = Jenis_usaha::all();
+      return view('pengusaha.tambahUsaha')->with(compact('jenis_usaha'));
     }
     else
     {
@@ -151,7 +188,7 @@ class PengusahaController extends Controller
   {
     if($this->checkIfFilled())
     {
-      $pengusaha = Pengusaha::where('id_auth', Auth::guard('pengusaha')->user()->id)->first();
+      $pengusaha = $this->getPengusaha();
       return view('pengusaha.home')->with(compact('pengusaha'));
     }
     else
@@ -159,6 +196,50 @@ class PengusahaController extends Controller
       return redirect(route('pengusaha.isiprofile'));
     }
   }
+  public function uploadUsaha(Request $request)
+  {
+    $validation = $this->validatorUsaha($request->toArray());
+    if($validation->fails()){
+        $errors = $validation->errors();
+        return redirect(route('pengusaha.tambahUsaha'))
+                    ->with(compact('errors'))
+                    ->withInput();
+    }else{
+      $rnd_str = $request['jenis_usaha'];
+      $temp = abs((round(microtime(true) * 1000))%10000000);
+      $check = Usaha::find($rnd_str.$temp);
+      while($check!=null){
+            $temp = abs((round(microtime(true) * 1000))%10000000);
+            $check = Usaha::find($rnd_str.$temp);
+      }
+      $request['id'] = $rnd_str.$temp;
 
+      $new_usaha = $this->createUsaha($request->toArray());
+
+      $link = Storage::disk('pengusaha')->put('/'.$this->getPengusaha()->id.'/usaha'.'/'.$new_usaha->id,  $request->file('Foto_usaha'));
+      $new_foto_usaha = new Foto_usaha();
+      $new_foto_usaha->id_usaha = $new_usaha->id;
+      $new_foto_usaha->url_foto = $link;
+      $new_foto_usaha->save();
+      return redirect(route('pengusaha.tambahJaminan' ,['id_usaha'=>$new_usaha->id]));
+    }
+  }
+
+  public function showFormJaminan($id_usaha)
+  {
+    if($this->checkIfFilled())
+    {
+      $jenis_jaminan = Jenis_jaminan::all();
+      return view('pengusaha.tambahJaminan')->with(compact('id_usaha', 'jenis_jaminan'));
+    }
+    else
+    {
+      return redirect(route('pengusaha.isiprofile'));
+    }
+  }
+  public function uploadJaminan(Request $request)
+  {
+
+  }
 
 }
