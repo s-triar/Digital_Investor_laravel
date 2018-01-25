@@ -13,7 +13,6 @@ return [
     |
     */
 
-<<<<<<< HEAD
     'name' => env('APP_NAME', 'Test'),
 
     /*
