@@ -151,7 +151,8 @@ class PengusahaController extends Controller
   {
     if($this->checkIfFilled())
     {
-      return view('pengusaha.home');
+      $pengusaha = Pengusaha::where('id_auth', Auth::guard('pengusaha')->user()->id)->first();
+      return view('pengusaha.home')->with(compact('pengusaha'));
     }
     else
     {
