@@ -12,11 +12,7 @@
               <blockquote class="">
                     <p class="probootstrap-author">
                     <a href="https://probootstrap.com/" target="_blank">
-<<<<<<< HEAD
                     <span class="probootstrap-name">Nama tok IKI</span>
-=======
-                    <span class="probootstrap-name">Nama pengusaha iku</span>
->>>>>>> 3da478b59ac9bf21b4023dfb6b31af4590969eea
                     <span class="probootstrap-title">Anda berhasil masuk sebagai pengusaha!</span>
                   </a>
                 </p>
