@@ -128,13 +128,18 @@ class PengusahaController extends Controller
                     ->with(compact('errors'))
                     ->withInput();
     }else{
+        $rnd_str = substr(md5(microtime()), rand(0,26),5);
         $temp = abs((round(microtime(true) * 1000))%10000000);
         $check = Pengusaha::find($temp);
+        $check = Pengusaha::find($rnd_str.$temp);
         while($check!=null){
+          $rnd_str = substr(md5(microtime()), rand(0,26),5);
           $temp = abs((round(microtime(true) * 1000))%10000000);
           $check = Pengusaha::find($temp);
+          $check = Pengusaha::find($rnd_str.$temp);
         }
         $request['id'] = $temp;
+        $request['id'] = $rnd_str.$temp;
         // $filename = md5(abs((round(microtime(true)))));
         $request['F_ktp'] = Storage::disk('pengusaha')->put('/'.$request['id'].'/ktp',  $request->file('Foto_ktp'));
         // $request['Foto_ktp'] = 'pengusaha'.'/'.$request['id'].'/ktp';
