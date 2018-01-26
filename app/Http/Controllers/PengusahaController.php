@@ -6,9 +6,11 @@ use Auth;
 use App\Auth as Auth_user;
 use App\Pengusaha;
 use App\Usaha;
+use App\Jaminan;
 use App\Jenis_usaha;
 use App\Jenis_jaminan;
 use App\Foto_usaha;
+use App\Foto_jaminan;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -47,7 +49,7 @@ class PengusahaController extends Controller
   protected function validatorPengusaha(array $data)
   {
         return Validator::make($data, [
-            'NIK' => 'required|string|max:20|unique:pengusaha',
+            'NIK' => 'required|string|max:15|unique:pengusaha',
             'Nama' => 'required|string|max:255',
             'Agama' => 'required|string|max:255',
             'Alamat' => 'required|string|max:255',
@@ -103,6 +105,23 @@ class PengusahaController extends Controller
           'closed' => 0,
       ]);
   }
+  protected function validatorJaminan(array $data)
+  {
+        return Validator::make($data, [
+          'Nama_Jaminan' => 'required|string|max:191',
+          'Keterangan' => 'required|string|max:191',
+          'Foto_jaminan' => 'required|mimes:jpeg,jpg,png|min:50|max:3000'
+        ]);
+  }
+  protected function createJaminan(array $request)
+  {
+      return Jaminan::create([
+          'id_usaha' => $request['id_usaha'],
+          'id_jenis_jaminan' => $request['jenis_jaminan'],
+          'nama' => $request['Nama_Jaminan'],
+          'keterangan' => $request['Keterangan'],
+      ]);
+  }
   public function showFormIsiProfile(){
     $s = $this->pengaman();
     return view('pengusaha.formProfileFirst');
@@ -110,7 +129,8 @@ class PengusahaController extends Controller
   public function showDaftarUsaha(){
     if($this->checkIfFilled())
     {
-      $usaha = Usaha::where('id_pengusaha', $this->getPengusaha()->id);
+      $usaha = new Usaha();
+      $usaha = $usaha->with(['foto_usaha','jenis_usaha'])->where('id_pengusaha', $this->getPengusaha()->id)->get();
       return view('pengusaha.daftarUsaha')->with(compact('usaha'));
     }
     else
@@ -239,7 +259,21 @@ class PengusahaController extends Controller
   }
   public function uploadJaminan(Request $request)
   {
-
+    $validation = $this->validatorJaminan($request->toArray());
+    if($validation->fails()){
+        $errors = $validation->errors();
+        return redirect(route('pengusaha.tambahJaminan'))
+                    ->with(compact('errors'))
+                    ->withInput();
+    }else{
+      $new_jaminan = $this->createJaminan($request->toArray());
+      $link = Storage::disk('pengusaha')->put('/'.$this->getPengusaha()->id.'/usaha'.'/'.$new_jaminan->id_usaha,  $request->file('Foto_jaminan'));
+      $new_foto_jaminan = new Foto_jaminan();
+      $new_foto_jaminan->id_jaminan = $new_jaminan->id;
+      $new_foto_jaminan->url_foto = $link;
+      $new_foto_jaminan->save();
+      return redirect(route('pengusaha.daftarUsaha'));
+    }
   }
 
 }
