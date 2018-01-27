@@ -16,7 +16,7 @@
             {{ csrf_field() }}
             <input name="id_usaha" class="form-control" id="id_usaha" type="text" value="{{$id_usaha}}" readonly hidden>
             <div class="form-group">
-            <label class="col-sm-5" for="nama">nama Jaminan</label>
+            <label class="col-sm-5" for="nama">Nama Jaminan</label>
             <input name="Nama_Jaminan" class="form-control" id="nama" type="text" placeholder="Nama Jaminan">
             @if ($errors->has('Nama_Jaminan'))
                 <strong>{{ $errors->first('Nama_Jaminan') }}</strong>
