@@ -16,6 +16,10 @@ class Jaminan extends Model
      */
     protected $dates = ['deleted_at'];
     protected $table = 'jaminan';
+    protected $fillable = 
+    [
+        'id_usaha','id_jenis_jaminan','nama','keterangan'
+    ];
     public function admin()
     {
         return $this->belongsTo('App\Admin', 'id_admin');

@@ -14,11 +14,12 @@
         <div class="col-md probootstrap-animate fadeInUp probootstrap-animated ">
          <form class="probootstrap-form" method="post" action="{{route('pengusaha.tambahJaminanPost')}}" enctype="multipart/form-data">
             {{ csrf_field() }}
+            <input name="id_usaha" class="form-control" id="id_usaha" type="text" value="{{$id_usaha}}" readonly hidden>
             <div class="form-group">
             <label class="col-sm-5" for="nama">nama Jaminan</label>
-            <input name="nama" class="form-control" id="nama" type="text" placeholder="Nama Jaminan">
-            @if ($errors->has('nama'))
-                <strong>{{ $errors->first('nama') }}</strong>
+            <input name="Nama_Jaminan" class="form-control" id="nama" type="text" placeholder="Nama Jaminan">
+            @if ($errors->has('Nama_Jaminan'))
+                <strong>{{ $errors->first('Nama_Jaminan') }}</strong>
             @endif
           </div>
             <div class="form-group">
@@ -32,9 +33,9 @@
             
             <div class="form-group">
                 <label class="col-sm-2" for="keterangan">Keterangan</label>
-                <input name="keterangan" class="form-control" id="keterangan" type="text" placeholder="Keterangan">
-            @if ($errors->has('keterangan'))
-                <strong>{{ $errors->first('keterangan') }}</strong>
+                <input name="Keterangan" class="form-control" id="keterangan" type="text" placeholder="Keterangan">
+            @if ($errors->has('Keterangan'))
+                <strong>{{ $errors->first('Keterangan') }}</strong>
             @endif
             </div>
                 
