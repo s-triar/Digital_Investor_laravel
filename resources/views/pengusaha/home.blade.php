@@ -12,7 +12,7 @@
               <blockquote class="">
                     <p class="probootstrap-author">
                     <a href="https://probootstrap.com/" target="_blank">
-                    <span class="probootstrap-name">{{$pengusaha->nama}}</span>
+                    <span class="probootstrap-name">Selamat {{$pengusaha->nama}}</span>
                     <span class="probootstrap-title">Anda berhasil masuk sebagai pengusaha!</span>
                   </a>
                 </p>

@@ -26,7 +26,7 @@
          <form class="probootstrap-form" method="post" action="{{route('pengusaha.tambahUsahaPost')}}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="form-group">
-            <label class="col-sm-2" for="nama">nama</label>
+            <label class="col-sm-5" for="nama">Nama Usaha</label>
             <input name="nama" class="form-control" id="nama" type="text" placeholder="Nama Usaha">
             @if ($errors->has('nama'))
                 <strong>{{ $errors->first('nama') }}</strong>
