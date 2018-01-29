@@ -78,7 +78,7 @@
                 @endif
               </div>
               <div class="form-group">
-                <label class="" for="Tanggal">Tempat Lahir</label>
+                <label class="" for="Tanggal">Tanggal Lahir</label>
                 <input class="form-control" type="date" name="Tanggal" >
                 @if ($errors->has('Tanggal'))
                     <strong>{{ $errors->first('Tanggal') }}</strong>

@@ -19,7 +19,7 @@ class Usaha extends Model
     public $incrementing = false;
     protected $fillable = 
     [
-        'id','id_pengusaha', 'nama', 'alamat', 'jenis', 'keterangan' , 'modal', 'isFinal' , 'verified' , 'closed'
+        'id','id_pengusaha', 'nama', 'alamat', 'jenis', 'keterangan' , 'modal', 'isFinal' ,'jatuh_tempo', 'verified' , 'closed'
     ];
 
     public function pengusaha()

@@ -86,6 +86,7 @@ class PengusahaController extends Controller
           'alamat' => 'required|string|max:191',
           'keterangan' => 'required|string|max:191',
           'modal' => 'required|numeric',
+          'jatuh_tempo' => 'required|date',
           'isFinal' => 'required',
           'Foto_usaha' => 'required|mimes:jpeg,jpg,png|min:50|max:3000'
         ]);
@@ -100,6 +101,7 @@ class PengusahaController extends Controller
           'alamat' => $request['alamat'],
           'keterangan' => $request['keterangan'],
           'modal' => $request['modal'],
+          'jatuh_tempo' => $request['jatuh_tempo'],
           'isFinal' => $request['isFinal'],
           'verified' => 1,
           'closed' => 0,

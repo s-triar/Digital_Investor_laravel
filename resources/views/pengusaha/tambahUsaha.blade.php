@@ -63,6 +63,13 @@
             @endif
             </div>
             <div class="form-group">
+                    <label class="" for="jatuh_tempo">Tanggal Lahir</label>
+                    <input class="form-control" id="jatuh_tempo" name="jatuh_tempo" type="date" name="jatuh_tempo" >
+                    @if ($errors->has('jatuh_tempo'))
+                        <strong>{{ $errors->first('jatuh_tempo') }}</strong>
+                    @endif
+                  </div>
+            <div class="form-group">
                     <label class="col-sm-5" for="isFinal">Tandai Jika Sudah Benar</label>
                     <input name="isFinal" class="form" id="isFinal" type="checkbox" value="1">
                 @if ($errors->has('isFinal'))
