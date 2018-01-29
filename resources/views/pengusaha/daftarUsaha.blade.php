@@ -21,12 +21,12 @@
                 <div class="probootstrap-image probootstrap-animate fadeIn probootstrap-animated" data-animate-effect="fadeIn" style="background-image: url(assets/images/img_2.jpg)"></div>
                 <div class="probootstrap-text">
                   <div class="probootstrap-inner probootstrap-animate fadeInRight probootstrap-animated" data-animate-effect="fadeInRight">
-                    <h2 class="heading mb-4">{{$j->nama}}</h2>
-                    <p>{{$j->jenis_usaha->nama}}</p>
-                    <p>{{$j->keterangan}}</p>
-                    <p>{{$j->alamat}}</p>
-                    <p>Rp. {{$j->modal}}</p>
-                    <p>{{$j->jatuh_tempo}}</p>
+                    <h2 class="heading mb-4">Nama Usaha: {{$j->nama}}</h2>
+                    <p>Jenis usaha: {{$j->jenis_usaha->nama}}</p>
+                    <p>Keterangan: {{$j->keterangan}}</p>
+                    <p>Alamat: {{$j->alamat}}</p>
+                    <p>Modal: Rp. {{$j->modal}} ,-</p>
+                    <p>Jatuh Tempo: {{$j->jatuh_tempo}}</p>
                     <p><a href="#" class="btn btn-primary">View Detail</a></p>
                   </div>
                 </div>
